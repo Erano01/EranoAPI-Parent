@@ -1,0 +1,11 @@
+name: EranoAPI
+version: 1.0
+main: me.erano.com.api.CorePlugin
+#api-version can be 1.13 min
+api-version: 1.13
+commands:
+  showTPS:
+    description: Shows the current TPS
+  piano:
+    description: open piano
+    usage: /piano
