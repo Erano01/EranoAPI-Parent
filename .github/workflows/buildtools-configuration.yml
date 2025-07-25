@@ -247,3 +247,56 @@ jobs:
             **/target/*.jar
             !**/target/*-sources.jar
             !**/target/*-javadoc.jar
+
+  publish-eranoapi-to-packages:
+    needs: build-project
+    runs-on: ubuntu-latest
+    env:
+      GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Set Maven settings.xml
+        run: |
+          mkdir -p $HOME/.m2
+          cp .github/maven-settings.xml $HOME/.m2/settings.xml
+
+      - name: Build EranoAPI module
+        run: |
+          mvn -pl EranoAPI -am clean package -DskipTests
+
+      - name: Publish EranoAPI Jar to GitHub Packages
+        run: |
+          mvn -pl EranoAPI deploy -DskipTests -s $HOME/.m2/settings.xml
+
+  publish-dist-to-release:
+    needs: build-project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build Dist module
+        run: |
+          mvn -pl Dist -am clean package -DskipTests
+
+      - name: Upload Dist Jar to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Dist/target/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
