@@ -1,12 +1,5 @@
 name: Build EranoAPI with NMS Dependencies
 
-#on:
-#  push:
-#    branches: [ main, develop ]
-#  pull_request:
-#    branches: [ main ]
-#  workflow_dispatch:
-
 on:
   push:
     tags:
@@ -262,6 +255,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: List EranoAPI/target contents
+        run: |
+          echo "EranoAPI/target klasörü içeriği:"
+          ls -lh EranoAPI/target
+
       - name: Set Maven settings.xml
         run: |
           mkdir -p $HOME/.m2
@@ -285,6 +283,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: List Dist/target contents
+        run: |
+          echo "Dist/target klasörü içeriği:"
+          ls -lh Dist/target
 
       - name: Upload Dist Jar to Release
         uses: softprops/action-gh-release@v2
