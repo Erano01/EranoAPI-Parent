@@ -270,7 +270,7 @@ jobs:
             -DartifactId=EranoAPI \
             -Dversion=1.0 \
             -Dpackaging=jar \
-            -Dfile=EranoAPI/target/EranoAPI.jar \
+            -Dfile=EranoAPI/target/EranoAPI-1.0.jar \
             -DrepositoryId=github \
             -Durl=https://maven.pkg.github.com/Erano01/EranoAPI-Parent
 
@@ -285,6 +285,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            Dist/target/Dist.jar
+            Dist/target/EranoAPI.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
