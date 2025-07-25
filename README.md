@@ -27,7 +27,6 @@ For documentation and examples, please check the source code.
   <groupId>me.erano.com</groupId>
   <artifactId>eranoapi</artifactId>
   <version>1.0</version>
-  <scope>provided</scope>
 </dependency>
 ```
 
