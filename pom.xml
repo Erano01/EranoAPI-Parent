@@ -28,7 +28,7 @@
 		<repository>
 			<id>github</id>
 			<name>GitHub Erano01 Spigot Packages</name>
-			<url>https://maven.pkg.github.com/Erano01/EranoAPI</url>
+			<url>https://maven.pkg.github.com/Erano01/EranoAPI-Parent</url>
 		</repository>
 
 		<!-- spigot, bukkit, remapped spigot versions repo for +1.16 versions-->
