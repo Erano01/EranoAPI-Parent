@@ -178,72 +178,82 @@ jobs:
           path: ~/.m2/repository/org/spigotmc
           retention-days: 1
 
-#  build-project:
-#    needs: prepare-spigot-deps
-#    runs-on: ubuntu-latest
-#    env:
-#      GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
-#
-#    steps:
-#      - name: Checkout Repository
-#        uses: actions/checkout@v4
-#
-#      - name: Setup Java 21 (for main build)
-#        uses: actions/setup-java@v4
-#        with:
-#          distribution: 'temurin'
-#          java-version: '21'
-#
-#      - name: Set Maven settings.xml for build
-#        run: |
-#          mkdir -p $HOME/.m2
-#          cp .github/maven-settings.xml $HOME/.m2/settings.xml
-#
-#      - name: Cache Maven Dependencies
-#        uses: actions/cache@v4
-#        with:
-#          path: ~/.m2/repository
-#          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
-#          restore-keys: |
-#            maven-${{ runner.os }}-
-#
-#      - name: Download All Spigot Dependencies
-#        uses: actions/download-artifact@v4
-#        with:
-#          pattern: spigot-deps-*
-#          path: spigot-artifacts
-#          merge-multiple: true
-#
-#      - name: Install Spigot Dependencies to Local Repository
-#        run: |
-#          mkdir -p ~/.m2/repository/org/spigotmc
-#          cp -r spigot-artifacts/* ~/.m2/repository/org/spigotmc/ || true
-#
-#      - name: Verify Spigot Dependencies
-#        run: |
-#          echo "Checking installed Spigot dependencies:"
-#          find ~/.m2/repository/org/spigotmc -name "*.jar" | head -20
-#
-#      - name: Build EranoAPI
-#        run: |
-#          echo "Building EranoAPI project..."
-#          mvn clean compile -B -V
-#
-#      - name: Test Build
-#        run: |
-#          echo "Running tests..."
-#          mvn test -B
-#
-#      - name: Package Project
-#        run: |
-#          echo "Packaging project..."
-#          mvn package -B -DskipTests
-#
-#      - name: Upload Build Artifacts
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: eranoapi-build
-#          path: |
-#            **/target/*.jar
-#            !**/target/*-sources.jar
-#            !**/target/*-javadoc.jar
+  build-project:
+    needs: prepare-spigot-deps
+    runs-on: ubuntu-latest
+    env:
+      GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21 (for main build)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Set Maven settings.xml for build
+        run: |
+          mkdir -p $HOME/.m2
+          cp .github/maven-settings.xml $HOME/.m2/settings.xml
+
+      - name: Cache Maven Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}-
+
+      - name: Download All Spigot Dependencies
+        uses: actions/download-artifact@v4
+        with:
+          pattern: spigot-deps-*
+          path: spigot-artifacts
+          merge-multiple: true
+
+      - name: Install Spigot Dependencies to Local Repository
+        run: |
+          mkdir -p ~/.m2/repository/org/spigotmc
+          cp -r spigot-artifacts/* ~/.m2/repository/org/spigotmc/ || true
+
+      - name: Verify Spigot Dependencies
+        run: |
+          echo "Checking installed Spigot dependencies:"
+          find ~/.m2/repository/org/spigotmc -name "*.jar" | head -20
+
+      - name: Build EranoAPI
+        run: |
+          echo "Building EranoAPI project..."
+          mvn clean compile -B -V
+
+      - name: Test Build
+        run: |
+          echo "Running tests..."
+          mvn test -B
+
+      - name: Package Project
+        run: |
+          echo "Packaging project..."
+          mvn package -B -DskipTests
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: eranoapi-build
+          path: |
+            **/target/*.jar
+            !**/target/*-sources.jar
+            !**/target/*-javadoc.jar
+
+      - name: Deploy EranoAPI submodule to GitHub Packages
+        working-directory: EranoAPI
+        env:
+          GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+        run: |
+          mkdir -p $HOME/.m2
+          cp ../.github/maven-settings.xml $HOME/.m2/settings.xml
+          mvn deploy -B -DskipTests -s $HOME/.m2/settings.xml
