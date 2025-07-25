@@ -20,33 +20,4 @@
 	</dependencies>
 
 
-	<!-- For deploying EranoAPI project to Github Packages -->
-	<distributionManagement>
-		<repository>
-			<id>github</id>
-			<name>GitHub Packages</name>
-			<url>https://maven.pkg.github.com/Erano01/EranoAPI-Parent</url>
-		</repository>
-	</distributionManagement>
-
-	<profiles>
-		<profile>
-			<id>github-deploy</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-deploy-plugin</artifactId>
-						<version>3.1.1</version>
-						<configuration>
-							<repositoryId>github</repositoryId>
-							<url>https://maven.pkg.github.com/Erano01/EranoAPI-Parent</url>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
-
-
 </project>
