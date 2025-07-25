@@ -25,7 +25,7 @@ For documentation and examples, please check the source code.
 ```xml
 <dependency>
   <groupId>me.erano.com</groupId>
-  <artifactId>EranoAPI</artifactId>
+  <artifactId>core</artifactId>
   <version>1.0</version>
   <scope>provided</scope>
 </dependency>
