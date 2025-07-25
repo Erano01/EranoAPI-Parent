@@ -10,6 +10,8 @@ on:
 jobs:
   prepare-spigot-deps:
     runs-on: ubuntu-latest
+    env:
+      GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
     strategy:
       matrix:
         include:
@@ -152,9 +154,7 @@ jobs:
           mkdir -p $HOME/.m2
           cp .github/maven-settings.xml $HOME/.m2/settings.xml
 
-      - name: Deploy Spigot Jar to GitHub Packages #Workflow bu kısımda patlıyor.
-        env:
-          GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+      - name: Deploy Spigot Jar to GitHub Packages
         run: |
           BUILD_JAR="build-${{ matrix.spigot-version }}/Spigot/Spigot-Server/target/spigot-${{ matrix.spigot-version }}-R0.1-SNAPSHOT.jar"
           if [ -f "$BUILD_JAR" ]; then
@@ -181,6 +181,8 @@ jobs:
   build-project:
     needs: prepare-spigot-deps
     runs-on: ubuntu-latest
+    env:
+      GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
 
     steps:
       - name: Checkout Repository
@@ -191,6 +193,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+
+      - name: Set Maven settings.xml for build
+        run: |
+          mkdir -p $HOME/.m2
+          cp .github/maven-settings.xml $HOME/.m2/settings.xml
 
       - name: Cache Maven Dependencies
         uses: actions/cache@v4
