@@ -8,6 +8,7 @@
 		<version>1.0</version>
 	</parent>
 	<artifactId>EranoAPI</artifactId>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<!-- latest spigot-api needed -->
