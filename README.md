@@ -8,23 +8,28 @@ This project is a Java-based API parent module.
 - Easy setup
 - Open source under the MIT license
 
-## Installation
-
-```sh
-git clone https://github.com/Erano01/EranoAPI-Parent.git
-cd EranoAPI-Parent
-```
-
-To download dependencies and build the project:
-
-```sh
-mvn clean install
-```
 
 ## Usage
 
 You can use the project modules in your own applications.  
 For documentation and examples, please check the source code.
+
+```xml
+<repository>
+  <id>github</id>
+  <name>GitHub Erano01 Spigot Packages</name>
+  <url>https://maven.pkg.github.com/Erano01/EranoAPI-Parent</url>
+</repository>
+```
+
+```xml
+<dependency>
+  <groupId>me.erano.com</groupId>
+  <artifactId>EranoAPI</artifactId>
+  <version>1.0</version>
+  <scope>provided</scope>
+</dependency>
+```
 
 ## Contributing
 
