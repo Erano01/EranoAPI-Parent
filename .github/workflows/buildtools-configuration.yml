@@ -245,23 +245,3 @@ jobs:
             **/target/*.jar
             !**/target/*-sources.jar
             !**/target/*-javadoc.jar
-            
-      - name: Publish EranoAPI Jar to GitHub Packages
-        run: |
-          JAR_PATH=$(find ./EranoAPI/target -maxdepth 1 -type f -name "*.jar" | grep -vE '(-sources|-javadoc)\.jar$' | head -n1)
-          if [ -z "$JAR_PATH" ]; then
-            echo "EranoAPI jar dosyası bulunamadı! Publish işlemi atlanıyor."
-            exit 0
-          fi
-          VERSION="${GITHUB_REF_NAME:-1.0}"
-          echo "EranoAPI jar dosyası: $JAR_PATH"
-          echo "Versiyon: $VERSION"
-          mvn deploy:deploy-file \
-            -s $HOME/.m2/settings.xml \
-            -DgroupId=me.erano.com \
-            -DartifactId=EranoAPI \
-            -Dversion=$VERSION \
-            -Dpackaging=jar \
-            -Dfile=$JAR_PATH \
-            -DrepositoryId=github \
-            -Durl=https://maven.pkg.github.com/Erano01/EranoAPI-Parent
