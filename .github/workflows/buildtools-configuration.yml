@@ -183,7 +183,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
-      GITHUB_ACTOR: ${{ github.actor }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -226,28 +226,24 @@ jobs:
 
       - name: Build EranoAPI
         run: |
-          echo "Building EranoAPI submodule..."
-          mvn -pl EranoAPI clean compile -B -V
+          echo "Building EranoAPI project..."
+          mvn clean compile -B -V
 
-      - name: Test EranoAPI
+      - name: Test Build
         run: |
-          echo "Running tests for EranoAPI..."
-          mvn -pl EranoAPI test -B
+          echo "Running tests..."
+          mvn test -B
 
-      - name: Package EranoAPI
+      - name: Package Project
         run: |
-          echo "Packaging EranoAPI..."
-          mvn -pl EranoAPI package -B -DskipTests
+          echo "Packaging project..."
+          mvn package -B -DskipTests
 
-      - name: Upload EranoAPI Build Artifacts
+      - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: eranoapi-build
-          path: EranoAPI/target/*.jar
-
-      - name: Deploy EranoAPI to GitHub Packages
-        run: |
-          mvn -pl EranoAPI deploy -B -DskipTests -s $HOME/.m2/settings.xml
-        env:
-          GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
-          GITHUB_ACTOR: ${{ github.actor }}
+          path: |
+            **/target/*.jar
+            !**/target/*-sources.jar
+            !**/target/*-javadoc.jar
