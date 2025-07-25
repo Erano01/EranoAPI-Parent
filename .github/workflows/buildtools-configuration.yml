@@ -152,7 +152,7 @@ jobs:
           mkdir -p $HOME/.m2
           cp .github/maven-settings.xml $HOME/.m2/settings.xml
 
-      - name: Deploy Spigot Jar to GitHub Packages
+      - name: Deploy Spigot Jar to GitHub Packages #Workflow bu kısımda patlıyor.
         env:
           GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
         run: |
