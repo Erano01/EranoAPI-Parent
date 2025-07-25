@@ -182,7 +182,6 @@ jobs:
     env:
       GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
       GITHUB_ACTOR: ${{ github.actor }}
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -225,32 +224,28 @@ jobs:
 
       - name: Build EranoAPI
         run: |
-          echo "Building EranoAPI project..."
-          mvn clean compile -B -V
+          echo "Building EranoAPI submodule..."
+          mvn -pl EranoAPI clean compile -B -V
 
-      - name: Test Build
+      - name: Test EranoAPI
         run: |
-          echo "Running tests..."
-          mvn test -B
+          echo "Running tests for EranoAPI..."
+          mvn -pl EranoAPI test -B
 
-      - name: Package Project
+      - name: Package EranoAPI
         run: |
-          echo "Packaging project..."
-          mvn package -B -DskipTests
+          echo "Packaging EranoAPI..."
+          mvn -pl EranoAPI package -B -DskipTests
 
-      - name: Upload Build Artifacts
+      - name: Upload EranoAPI Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: eranoapi-build
-          path: |
-            **/target/*.jar
-            !**/target/*-sources.jar
-            !**/target/*-javadoc.jar
+          path: EranoAPI/target/*.jar
 
-      # EK ADIM: Projenin kendisini GitHub Packages'a deploy et!
-      - name: Deploy EranoAPI-Parent to GitHub Packages
+      - name: Deploy EranoAPI to GitHub Packages
         run: |
-          mvn deploy -B -DskipTests -s $HOME/.m2/settings.xml
+          mvn -pl EranoAPI deploy -B -DskipTests -s $HOME/.m2/settings.xml
         env:
           GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
