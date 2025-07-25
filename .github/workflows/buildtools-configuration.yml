@@ -245,54 +245,23 @@ jobs:
             **/target/*.jar
             !**/target/*-sources.jar
             !**/target/*-javadoc.jar
-
-  publish-eranoapi-to-packages:
-    needs: build-project
-    runs-on: ubuntu-latest
-    env:
-      GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: List EranoAPI/target contents
-        run: |
-          echo "EranoAPI/target klasörü içeriği:"
-          ls -lh EranoAPI/target
-
-      - name: Set Maven settings.xml
-        run: |
-          mkdir -p $HOME/.m2
-          cp .github/maven-settings.xml $HOME/.m2/settings.xml
-
+            
       - name: Publish EranoAPI Jar to GitHub Packages
         run: |
+          JAR_PATH=$(find ./EranoAPI/target -maxdepth 1 -type f -name "*.jar" | grep -vE '(-sources|-javadoc)\.jar$' | head -n1)
+          if [ -z "$JAR_PATH" ]; then
+            echo "EranoAPI jar dosyası bulunamadı! Publish işlemi atlanıyor."
+            exit 0
+          fi
+          VERSION="${GITHUB_REF_NAME:-1.0}"
+          echo "EranoAPI jar dosyası: $JAR_PATH"
+          echo "Versiyon: $VERSION"
           mvn deploy:deploy-file \
             -s $HOME/.m2/settings.xml \
             -DgroupId=me.erano.com \
             -DartifactId=EranoAPI \
-            -Dversion=1.0 \
+            -Dversion=$VERSION \
             -Dpackaging=jar \
-            -Dfile=EranoAPI/target/EranoAPI-1.0.jar \
+            -Dfile=$JAR_PATH \
             -DrepositoryId=github \
             -Durl=https://maven.pkg.github.com/Erano01/EranoAPI-Parent
-
-  publish-dist-to-release:
-    needs: build-project
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: List Dist/target contents
-        run: |
-          echo "Dist/target klasörü içeriği:"
-          ls -lh Dist/target
-
-      - name: Upload Dist Jar to Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            Dist/target/EranoAPI.jar
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
