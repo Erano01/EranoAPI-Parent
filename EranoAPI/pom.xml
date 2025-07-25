@@ -9,7 +9,7 @@
 	</parent>
 <!--	 <artifactId>EranoAPI</artifactId>-->
 	<!-- artifactId lower case yapınca mvn deploy yapılabiliyor.-->
-	 <artifactId>core</artifactId>
+	 <artifactId>eranoapi</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>

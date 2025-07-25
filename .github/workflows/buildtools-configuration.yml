@@ -2,10 +2,8 @@ name: Build EranoAPI with NMS Dependencies
 
 on:
   push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+    tags:
+      - "*"
 
 jobs:
   prepare-spigot-deps:
