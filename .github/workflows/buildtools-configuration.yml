@@ -181,6 +181,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+      GITHUB_ACTOR: ${{ github.actor }}
 
     steps:
       - name: Checkout Repository
@@ -245,3 +246,11 @@ jobs:
             **/target/*.jar
             !**/target/*-sources.jar
             !**/target/*-javadoc.jar
+
+      # EK ADIM: Projenin kendisini GitHub Packages'a deploy et!
+      - name: Deploy EranoAPI-Parent to GitHub Packages
+        run: |
+          mvn deploy -B -DskipTests -s $HOME/.m2/settings.xml
+        env:
+          GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
