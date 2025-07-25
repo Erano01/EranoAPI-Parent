@@ -247,3 +247,13 @@ jobs:
             **/target/*.jar
             !**/target/*-sources.jar
             !**/target/*-javadoc.jar
+
+      - name: Deploy EranoAPI submodule to GitHub Packages
+        working-directory: EranoAPI
+        env:
+          GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+        run: |
+          mkdir -p $HOME/.m2
+          cp ../.github/maven-settings.xml $HOME/.m2/settings.xml
+          mvn deploy -B -DskipTests -s $HOME/.m2/settings.xml
