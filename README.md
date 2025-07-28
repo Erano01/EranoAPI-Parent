@@ -14,6 +14,10 @@ This project is a Java-based API parent module.
 You can use the project modules in your own applications.  
 For documentation and examples, please check the source code.
 
+Note: You have to clone EranoAPI-Parent and execute "mvn clean install" from the project root.
+Then you have Dist/Target/EranoAPI.jar for your servers /plugins folder. 
+For API usage EranoAPI/Target/EranoAPI.jar needed.
+
 ```xml
 <repository>
   <id>github</id>
