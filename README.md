@@ -16,7 +16,8 @@ For documentation and examples, please check the source code.
 
 Note: You have to clone EranoAPI-Parent and execute "mvn clean install" from the project root.
 Then you have Dist/Target/EranoAPI.jar for your servers /plugins folder. 
-For API usage EranoAPI/Target/EranoAPI.jar needed.
+EranoAPI-Parent/EranoAPI project is enaugh for api usage. No need for NMS projects in your local.
+You can fetch this depedency from github:
 
 ```xml
 <repository>
