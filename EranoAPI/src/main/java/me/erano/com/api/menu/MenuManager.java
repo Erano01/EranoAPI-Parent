@@ -9,11 +9,12 @@ import org.bukkit.inventory.Inventory;
 import java.util.HashMap;
 import java.util.Map;
 
-//GUIManager
-//Oyun içindeki eventler burada menu sistemimize pass ediliyor. InventoryHandler method arayüzlerini incele
+// MenuListener'imiz Bukkit Event'larını (subject'lerini) MenuListener'a abone ederken,
+// MenuManager'a passlıyor hangi subject'in ne yapması gerektiğini.
 public class MenuManager {
 
     // Registry - Her bir inventory için InventoryHandler(menudeki davranışları temsil eden arayüz) mapleniyor.
+    // Oyuncular tarafından açılan tüm inventory'leri cache'ler bu registry.
     private final Map<Inventory, InventoryHandler> activeInventories = new HashMap<>();
 
     //Her bir inventory için InventoryHandler maplemek için olan operasyonumuz budur ve oyuncu için menu açıyor.
@@ -32,6 +33,10 @@ public class MenuManager {
         this.activeInventories.remove(inventory);
     }
 
+    // Aşağıda ki 3 method için:
+    // Subject'in kullandığı Inventory'nin kime ait olduğunu registry'e soruyor, eğer bu inventory registry'de kayıtlı ise
+    // Handler'in override edilecek olan davranışını execute ediyor.
+    // Menu extends InventoryHandler.
     public void handleClick(InventoryClickEvent event) {
         InventoryHandler handler = this.activeInventories.get(event.getInventory());
         if (handler != null) {

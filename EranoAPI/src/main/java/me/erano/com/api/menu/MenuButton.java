@@ -7,9 +7,14 @@ import org.bukkit.inventory.ItemStack;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+//usage:
+//new MenuButton()
+//    .creator(player -> new ItemStack(material))   // görünüm
+//    .consumer(event -> player.playSound(...))      // davranış
 
 //InventoryButton
 // Lightweight version of Gof Builder
+// Butonun ne göstereceği ile ne yapacağı birbirinden tamamen ayrıdır ve ikisi de dışarıdan enjekte edilir.
 public class MenuButton {
 
     private Function<Player, ItemStack> iconCreator;

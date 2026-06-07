@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 
 
 //GUIListener
-// observer, listener, subscriber
+// observer
 public class MenuListener implements Listener {
 
     private final MenuManager menuManager;
@@ -17,6 +17,7 @@ public class MenuListener implements Listener {
         this.menuManager = menuManager;
     }
 
+    // Bukkit event sisteminin subjectlerini kendimize abone ediyoruz aşağıda ki @EventHandler'lar ile.
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         this.menuManager.handleClick(event);
