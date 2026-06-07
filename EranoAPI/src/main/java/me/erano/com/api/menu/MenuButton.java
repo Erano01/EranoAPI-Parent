@@ -9,6 +9,7 @@ import java.util.function.Function;
 
 
 //InventoryButton
+// Lightweight version of Gof Builder
 public class MenuButton {
 
     private Function<Player, ItemStack> iconCreator;

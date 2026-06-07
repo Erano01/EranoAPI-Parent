@@ -8,6 +8,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 
 
 //GUIListener
+// observer, listener, subscriber
 public class MenuListener implements Listener {
 
     private final MenuManager menuManager;

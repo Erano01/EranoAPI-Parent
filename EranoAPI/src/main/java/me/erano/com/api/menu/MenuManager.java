@@ -13,7 +13,7 @@ import java.util.Map;
 //Oyun içindeki eventler burada menu sistemimize pass ediliyor. InventoryHandler method arayüzlerini incele
 public class MenuManager {
 
-    // Her bir inventory için InventoryHandler mapleniyor.
+    // Registry - Her bir inventory için InventoryHandler(menudeki davranışları temsil eden arayüz) mapleniyor.
     private final Map<Inventory, InventoryHandler> activeInventories = new HashMap<>();
 
     //Her bir inventory için InventoryHandler maplemek için olan operasyonumuz budur ve oyuncu için menu açıyor.
@@ -22,10 +22,12 @@ public class MenuManager {
         player.openInventory(menu.getInventory());
     }
 
+    // Yeni bir registry entry'si eklemek için kullanılan method.
     public void registerHandledInventory(Inventory inventory, InventoryHandler handler) {
         this.activeInventories.put(inventory, handler);
     }
 
+    // Registry'den bir entry silmek için kullanılan method.
     public void unregisterInventory(Inventory inventory) {
         this.activeInventories.remove(inventory);
     }
