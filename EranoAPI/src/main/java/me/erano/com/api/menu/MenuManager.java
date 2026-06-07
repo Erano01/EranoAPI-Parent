@@ -17,7 +17,8 @@ public class MenuManager {
     // Oyuncular tarafından açılan tüm inventory'leri cache'ler bu registry.
     private final Map<Inventory, InventoryHandler> activeInventories = new HashMap<>();
 
-    //Her bir inventory için InventoryHandler maplemek için olan operasyonumuz budur ve oyuncu için menu açıyor.
+    // Trigger method - Registry'e entry olarak eklenir ve oyuncunun ekranına Inventory açar.
+    // Herhangi bir yerden kullanılabilir menü sistemi bu sayede -> menuManager.openMenu(new PianoMenu(), player);
     public void openMenu(Menu menu, Player player) {
         this.registerHandledInventory(menu.getInventory(), menu);
         player.openInventory(menu.getInventory());
@@ -36,7 +37,7 @@ public class MenuManager {
     // Aşağıda ki 3 method için:
     // Subject'in kullandığı Inventory'nin kime ait olduğunu registry'e soruyor, eğer bu inventory registry'de kayıtlı ise
     // Handler'in override edilecek olan davranışını execute ediyor.
-    // Menu extends InventoryHandler.
+    // Menu(abstract class) extends InventoryHandler.
     public void handleClick(InventoryClickEvent event) {
         InventoryHandler handler = this.activeInventories.get(event.getInventory());
         if (handler != null) {
