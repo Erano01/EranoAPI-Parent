@@ -10,15 +10,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 // MenuListener'imiz Bukkit Event'larını (subject'lerini) MenuListener'a abone ederken,
-// MenuManager'a passlıyor hangi subject'in ne yapması gerektiğini.
-public class MenuManager {
+// MenuDispatcher'a passlıyor hangi subject'in ne yapması gerektiğini.
+public class MenuDispatcher {
 
     // Registry - Her bir inventory için InventoryHandler(menudeki davranışları temsil eden arayüz) mapleniyor.
     // Oyuncular tarafından açılan tüm inventory'leri cache'ler bu registry.
     private final Map<Inventory, InventoryHandler> activeInventories = new HashMap<>();
 
     // Trigger method - Registry'e entry olarak eklenir ve oyuncunun ekranına Inventory açar.
-    // Herhangi bir yerden kullanılabilir menü sistemi bu sayede -> menuManager.openMenu(new PianoMenu(), player);
+    // Herhangi bir yerden kullanılabilir menü sistemi bu sayede -> menuDispatcher.openMenu(new PianoMenu(), player);
     public void openMenu(Menu menu, Player player) {
         this.registerHandledInventory(menu.getInventory(), menu);
         player.openInventory(menu.getInventory());

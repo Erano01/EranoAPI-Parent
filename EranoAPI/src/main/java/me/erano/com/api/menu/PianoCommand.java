@@ -7,10 +7,10 @@ import org.bukkit.entity.Player;
 
 public class PianoCommand implements CommandExecutor {
 
-    private final MenuManager menuManager;
+    private final MenuDispatcher menuDispatcher;
 
-    public PianoCommand(MenuManager menuManager) {
-        this.menuManager = menuManager;
+    public PianoCommand(MenuDispatcher menuDispatcher) {
+        this.menuDispatcher = menuDispatcher;
     }
 
     //String label, String[] args
@@ -20,7 +20,7 @@ public class PianoCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player)commandSender;
-        this.menuManager.openMenu(new PianoMenu(), player);
+        this.menuDispatcher.openMenu(new PianoMenu(), player);
         return true;
     }
 

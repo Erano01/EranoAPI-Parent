@@ -23,6 +23,7 @@ public class PianoMenu extends Menu {
         for (int i = 0; i < inventorySize; i++) {
             Material material = i % 2 == 0 ? Material.WHITE_STAINED_GLASS_PANE : Material.BLACK_STAINED_GLASS_PANE;
             final float pitchOffset = i * 0.033f;
+            // buttonMap'e yeni bir entry ekliyoruz super class Menu üzerinden.
             this.addButton(i, this.createPianoButton(basePitch + pitchOffset, material));
         }
 

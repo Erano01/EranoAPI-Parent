@@ -19,14 +19,18 @@ public abstract class Menu implements InventoryHandler {
         this.inventory = this.createInventory();
     }
 
+    // Bukkit Inventory oluşturma. Her Menu subclass'ı kendi Inventory'sini oluşturmak zorunda.
+    protected abstract Inventory createInventory();
     public Inventory getInventory() {
         return this.inventory;
     }
 
+    // buttonMap'e yeni bir entry ekler.
     public void addButton(int slot, MenuButton button) {
         this.buttonMap.put(slot, button);
     }
 
+    // buttonMap içerisindeki düzeni Inventory'a aktarıyor.
     public void decorate(Player player) {
         this.buttonMap.forEach((slot, button) -> {
             ItemStack icon = button.getIconCreator().apply(player);
@@ -34,6 +38,7 @@ public abstract class Menu implements InventoryHandler {
         });
     }
 
+    // InventoryHandler'in davranışları burada implement ediliyor override edilerek.
     @Override
     public void onClick(InventoryClickEvent event) {
         event.setCancelled(true);
@@ -53,6 +58,6 @@ public abstract class Menu implements InventoryHandler {
     public void onClose(InventoryCloseEvent event) {
     }
 
-    protected abstract Inventory createInventory();
+
 
 }

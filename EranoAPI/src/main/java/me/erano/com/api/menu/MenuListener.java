@@ -11,26 +11,26 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 // observer
 public class MenuListener implements Listener {
 
-    private final MenuManager menuManager;
+    private final MenuDispatcher menuDispatcher;
 
-    public MenuListener(MenuManager menuManager) {
-        this.menuManager = menuManager;
+    public MenuListener(MenuDispatcher menuDispatcher) {
+        this.menuDispatcher = menuDispatcher;
     }
 
     // Bukkit event sisteminin subjectlerini kendimize abone ediyoruz aşağıda ki @EventHandler'lar ile.
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        this.menuManager.handleClick(event);
+        this.menuDispatcher.handleClick(event);
     }
 
     @EventHandler
     public void onOpen(InventoryOpenEvent event) {
-        this.menuManager.handleOpen(event);
+        this.menuDispatcher.handleOpen(event);
     }
 
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
-        this.menuManager.handleClose(event);
+        this.menuDispatcher.handleClose(event);
     }
 
 }

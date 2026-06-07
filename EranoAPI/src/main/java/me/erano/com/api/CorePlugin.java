@@ -1,12 +1,11 @@
 package me.erano.com.api;
 
-import java.util.ServiceLoader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import me.erano.com.api.menu.PianoCommand;
 import me.erano.com.api.menu.MenuListener;
-import me.erano.com.api.menu.MenuManager;
+import me.erano.com.api.menu.MenuDispatcher;
 import me.erano.com.api.performance.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,11 +26,11 @@ public class CorePlugin extends JavaPlugin{
         getServer().getScheduler().runTaskTimer(this, new ActionBarTask(this), 0, 20);
 
         //menu stuff
-        MenuManager menuManager = new MenuManager();
-        MenuListener menuListener = new MenuListener(menuManager);
+        MenuDispatcher menuDispatcher = new MenuDispatcher();
+        MenuListener menuListener = new MenuListener(menuDispatcher);
         //getServer().getPluginManager()
         Bukkit.getPluginManager().registerEvents(menuListener, this);
-        getCommand("piano").setExecutor(new PianoCommand(menuManager));
+        getCommand("piano").setExecutor(new PianoCommand(menuDispatcher));
 
     }
 
